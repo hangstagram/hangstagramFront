@@ -18,14 +18,14 @@ function Home() {
   },[]);
   return (
     <div>
-      {/* {dataList.map((item) => {
+      {dataList.map((item) => {
         return (
           <div key={item.id}>
             {item.content}
             <button onClick={()=> onDeleteHandler(item.id)}></button>
           </div>
         );
-      })} */}
+      })}
     </div>
   );
 }
