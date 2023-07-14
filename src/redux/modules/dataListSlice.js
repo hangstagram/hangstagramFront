@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    list:[{
-        id: 1,
-        content: "어려워요"
+        id:1,
+        content: "어려워요",
+        image: null
     }],
 }
 
@@ -21,5 +21,5 @@ const dataListSlice = createSlice({
 })
 
 
-export const {addDataList} = dataListSlice.actions;
+export const {uploadDataList} = dataListSlice.actions;
 export default dataListSlice.reducer;
