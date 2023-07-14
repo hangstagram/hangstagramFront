@@ -3,8 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     list:[{
         id: 1,
-        title:"시작해봅시다",
-        body: "어려워요"
+        content: "어려워요"
     }],
 }
 
