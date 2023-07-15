@@ -4,9 +4,8 @@ const initialState = {
         id:1,
         content: "어려워요",
         image: null
-    }],
-}
-
+    }
+    
 const dataListSlice = createSlice({
     name:"dataList",
     initialState,
@@ -21,5 +20,5 @@ const dataListSlice = createSlice({
 })
 
 
-export const {uploadDataList} = dataListSlice.actions;
+export const {uploadDataList, deleteDataList} = dataListSlice.actions;
 export default dataListSlice.reducer;
