@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 
 function Home() {
   const [dataList, setDataList] = useState([]);
@@ -10,14 +9,16 @@ function Home() {
 
   useEffect(() => {
     const fetchDataList = async () => {
-    await axios
+   const data= await axios
         .get("http://3.34.144.155:8080/api/post")
         .then((response) => {
-          console.log(response);
+          console.log(response.data)
+         return response.data
         })
         .catch((error) => console.log(error));
-      
+        setDataList(data)
     };
+    
     fetchDataList();
   }, []);
   return (
