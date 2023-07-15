@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { styled } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePen, faShip } from "@fortawesome/free-solid-svg-icons";
+import { faFilePen } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { Header } from "../Layout/Header";
+import Header from "../Layout/Header";
 function Home() {
   const [dataList, setDataList] = useState([]);
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchDataList = async () => {
@@ -36,18 +36,10 @@ function Home() {
   return (
     <>
       <div style={{ width: "100%" }}>
-        <Header>
-          <div style={{ display: "flex" }}>
-            <FontAwesomeIcon
-              icon={faShip}
-              onClick={() => navigate("/")}
-              style={ShipStyle}
-            />
-            <h2 style={{ marginLeft: "30px" }}>hangStargram99</h2>
-          </div>
+        <Header icon={faFilePen} >
           <FontAwesomeIcon
             icon={faFilePen}
-            onClick={() => navigate("/upload")}
+            onClick={()=> navigate("/upload")}
             style={Penstyle}
           />
         </Header>
@@ -111,15 +103,6 @@ const Texts = styled.div`
   overflow: hidden;
   color: black;
 `;
-
-const ShipStyle = {
-  zIndex: "1",
-  width: "40px",
-  height: "50px",
-  cursor: "pointer",
-  marginTop: "8px",
-  marginLeft: "15px",
-};
 
 const Penstyle = {
   width: "40px",
