@@ -51,7 +51,7 @@ function Upload() {
       fileInputRef.current.value = "";
     }
 
-    // window.location.href = "/";
+    window.location.href = "/";
   };
 
 // post 요청
