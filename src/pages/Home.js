@@ -11,7 +11,7 @@ function Home() {
   useEffect(() => {
     const fetchDataList = async () => {
     await axios
-        .get("http://3.34.144.155:8080/api/post",{withCredentials:true})
+        .get("http://3.34.144.155:8080/api/post")
         .then((response) => {
           console.log(response);
         })
