@@ -4,6 +4,7 @@ import { uploadDataList } from "../redux/modules/dataListSlice";
 import styled from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import axios from "axios";
 
 function Upload() {
   const [content, setContent] = useState("");
@@ -17,21 +18,43 @@ function Upload() {
     setSelectedImage(e.target.files[0]);
   };
 
-  const uploadButtonHandler = () => {
+  const uploadButtonHandler = async () => {
     dispatch(
       uploadDataList({
         content,
         selectedImage,
       })
     );
-    setContent("");
 
+    try {
+      const response = await axios.post("http://3.34.144.155:8080/api/post", {
+        content,
+      });
+
+      if (response.status === 200) {
+        console.log("Post request sent successfully!");
+        setContent("");
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+      } else {
+        console.error("Error sending post request.");
+      }
+    } catch (error) {
+   
+      console.error("Error sending post request:", error);
+     
+    }
+
+    setContent("");
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
 
-    window.location.href = "/";
+    // window.location.href = "/";
   };
+
+// post 요청
 
   return (
     <UploadLayout>
@@ -61,7 +84,7 @@ function Upload() {
           </div>
         </div>
       </UploadContainer>
-      {content}
+    {content}
     </UploadLayout>
   );
 }
