@@ -5,10 +5,13 @@ import styled from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
+import Header from "../Layout/Header";
+import { useNavigate } from "react-router-dom";
 
 function Upload() {
   const [content, setContent] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const fileInputRef = useRef(null);
@@ -41,9 +44,7 @@ function Upload() {
         console.error("Error sending post request.");
       }
     } catch (error) {
-   
       console.error("Error sending post request:", error);
-     
     }
 
     setContent("");
@@ -51,59 +52,68 @@ function Upload() {
       fileInputRef.current.value = "";
     }
 
-    window.location.href = "/";
+    navigate("/");
   };
 
-// post 요청
 
   return (
-    <UploadLayout>
-      <UploadContainer>
-        <ImageStyled ref={fileInputRef} type="file" onChange={onChangeImage} />
-        <div style={{ width: "100%" }}>
-          <ReactQuill
-            theme="snow"
-            name="content"
-            value={content}
-            placeholder="내용"
-            onChange={onChangeContent}
-            style={{
-              width:'100%',
-              height:'260px',
-            }}
+    <>
+      <Header />
+      <UploadLayout>
+        <UploadContainer>
+          <ImageStyled
+            ref={fileInputRef}
+            type="file"
+            onChange={onChangeImage}
           />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              paddingRight: "0px",
-              marginTop:'50px',
-            }}
-          >
-            <UploadButton onClick={uploadButtonHandler}>업로드</UploadButton>
-          </div>
-        </div>
-      </UploadContainer>
-    {content}
-    </UploadLayout>
+            <ReactQuill
+              theme="snow"
+              name="content"
+              value={content}
+              placeholder="내용"
+              onChange={onChangeContent}
+              style={{
+                width: "100%",
+                minHeight: "260px",
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                paddingRight: "0px",
+                marginTop: "50px",
+              }}
+            >
+              <UploadButton onClick={uploadButtonHandler}>업로드</UploadButton>
+            </div>
+         
+        </UploadContainer>
+      </UploadLayout>
+      {content}
+    </>
   );
 }
 
 export default Upload;
 
+
+
 const UploadLayout = styled.div`
+  width: 100%;
+  display: flex;
   margin: 0 auto;
-  width: 800px;
-  padding: 12px;
-  background-color: blue;
 `;
 
 const UploadContainer = styled.div`
-  background-color: yellow;
-  width: 97%;
+ border: 2px solid black;
+  width: 50%;
   display: flex;
+  flex-direction: column;
   gap: 6px;
   padding: 12px;
+  margin: 0 auto;
+  margin-top: 15px;
 `;
 
 // const InputStyled = styled.input`
@@ -122,6 +132,6 @@ const UploadButton = styled.button`
 
 const ImageStyled = styled.input`
   background-color: pink;
-  width: 60%;
-  height: 300px;
+  width: 100%;
+  height: 30px;
 `;
