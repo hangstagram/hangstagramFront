@@ -21,7 +21,7 @@ function Home() {
     };
 
     fetchDataList();
-  }, [dataList]);
+  }, []);
 
   const onDeleteHandler = async (id) => {
     try {
