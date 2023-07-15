@@ -24,13 +24,15 @@ function Home() {
   }, [dataList]);
 
   const onDeleteHandler = async (id) => {
-    axios.delete(`http://3.34.144.155:8080/api/post/${id}`)
-    setDataList(
-      dataList.filter((item)=>{
-        return item.id !== id
-      })
-    )
-  }
+    try {
+      await axios.delete(`http://3.34.144.155:8080/api/post/${id}`);
+      setDataList((prevDataList) =>
+        prevDataList.filter((item) => item.id !== id)
+      );
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
 
   return (
