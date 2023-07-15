@@ -15,6 +15,7 @@ function Home() {
         })
         .catch((error) => console.log("error", error));
     };
+    
     fetchDataList();
   }, []);
 
