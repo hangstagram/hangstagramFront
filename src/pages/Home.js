@@ -3,8 +3,8 @@ import axios from "axios";
 import { styled } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePen, faShip } from "@fortawesome/free-solid-svg-icons";
-
 import { useNavigate } from "react-router-dom";
+import { Header } from "../Layout/Header";
 function Home() {
   const [dataList, setDataList] = useState([]);
   const navigate = useNavigate();
@@ -14,15 +14,24 @@ function Home() {
       await axios
         .get("http://3.34.144.155:8080/api/post")
         .then((response) => {
-          console.log(response)
-          // setDataList(response.data)
-          // console.log(response.data.data)
+          // console.log(response)
+          setDataList(response.data);
         })
         .catch((error) => console.log("error", error));
     };
 
     fetchDataList();
   }, [dataList]);
+
+  const onDeleteHandler = async (id) => {
+    axios.delete(`http://3.34.144.155:8080/api/post/${id}`)
+    setDataList(
+      dataList.filter((item)=>{
+        return item.id !== id
+      })
+    )
+  }
+
 
   return (
     <>
@@ -50,39 +59,33 @@ function Home() {
             flexWrap: "wrap",
           }}
         >
-            {dataList.map((item) => {
-              return (
-                <Posts key={item.id}>
-                  <Images>
-                    <img
-                      alt="img"
-                      key={item.avatar}
-                      src={item.avatar}
-                      style={{ width: "280px" }}
-                    />
-                  </Images>
-                  <Texts>{item.email}</Texts>
-                </Posts>
-              );
-            })}
-          </div>
+          {dataList.map((item) => {
+            return (
+              <Posts key={item.id}>
+                <Images>
+                  <img
+                    alt="img"
+                    key={item.id}
+                    src={
+                      "https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg"
+                    }
+                    style={{ width: "280px", height: "500px" }}
+                  />
+                </Images>
+                <button onClick={()=>onDeleteHandler(item.id)}>삭제</button>
+                <Texts>
+                  <div dangerouslySetInnerHTML={{ __html: item.content }} />
+                </Texts>
+              </Posts>
+            );
+          })}
         </div>
+      </div>
     </>
   );
 }
 
 export default Home;
-
-const Header = styled.div`
-  width: 88.4%;
-  display: flex;
-  justify-content: space-between;
-  /* background-color: #aecdff; */
-  margin-left: 20px;
-  padding: 0px 20px;
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-`;
 
 const Posts = styled.div`
   width: 300px;
@@ -96,23 +99,17 @@ const Posts = styled.div`
 
 const Images = styled.div`
   width: 100%;
-  height: 130px;
-  padding: 20px 20px 80px;
-  border-radius: 10px;
+  height: 350px;
   display: flex;
+  margin-left: 10px;
   align-items: center;
   overflow: hidden;
 `;
 
 const Texts = styled.div`
-  /* background-color: #288cd2; */
-  width: 400px;
-  padding: 20px 20px 80px;
+  width: 100%;
   overflow: hidden;
-  border-radius: 10px;
   color: black;
-  font-size: 24px;
-  margin: 0 0 15px
 `;
 
 const ShipStyle = {
