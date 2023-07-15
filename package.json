@@ -9,8 +9,13 @@
     "@testing-library/user-event": "^13.2.1",
     "axios": "^1.4.0",
     "http-proxy-middleware": "^2.0.6",
+<<<<<<< HEAD
+=======
+    "i": "^0.3.7",
+>>>>>>> de51e5bd500de497995cc9c38dd68bbd952ff52e
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-quill": "^2.0.0",
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.1",
     "react-scripts": "^5.0.1",
@@ -41,5 +46,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://3.34.144.155:8080"
 }

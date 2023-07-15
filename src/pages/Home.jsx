@@ -1,10 +1,9 @@
-import React, { startTransition, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect } from "react";
 import { styled } from "styled-components";
 import { useDispatch } from "react-redux";
 import { deleteDataList } from "../redux/modules/dataListSlice";
-function Home() {
+const Home = () => {
   const [dataList, setDataList] = useState([]);
   const dispatch = useDispatch();
 
@@ -12,13 +11,6 @@ function Home() {
     const { data } = await axios.get("https://reqres.in/api/users?page=2");
     setDataList(data.data);
   };
-
-  // const fetchDataList = async () => {
-  //   const { data } = await axios.get("http://3.34.144.155:8080/api/post", {
-  //     withCredentials: true,
-  //   });
-  //   console.log(data.data);
-  // };
 
   const onDeleteButtonHandler = (id) => {
     dispatch(deleteDataList(id));
@@ -44,10 +36,11 @@ function Home() {
         })}
       </Layout>
     </Container>
-  );
+  )
 }
 
 export default Home;
+
 
 const Container = styled.div`
   display: flex;
@@ -91,4 +84,4 @@ const Texts = styled.div`
   border-radius: 10px;
   color: #ffffff;
   margin: 0 0 15px 30px;
-`;
+`
