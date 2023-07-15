@@ -4,28 +4,32 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 function Home() {
-  const [dataList, setDataList] = useState([])
+  const [dataList, setDataList] = useState([]);
 
-  const fetchdataList = async () => {
-    const { data } = await axios.get("https://reqres.in/api/users/")
-    console.log(data)
-  };
-
-  const onDeleteHandler = () => {}
+  const onDeleteHandler = () => {};
 
   useEffect(() => {
-    fetchdataList();
-  },[]);
+    const fetchDataList = async () => {
+    await axios
+        .get("http://3.34.144.155:8080/api/post",{withCredentials:true})
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => console.log(error));
+      
+    };
+    fetchDataList();
+  }, []);
   return (
     <div>
-      {/* {dataList.map((item) => {
+      {dataList.map((item) => {
         return (
           <div key={item.id}>
             {item.content}
-            <button onClick={()=> onDeleteHandler(item.id)}></button>
+            <button onClick={() => onDeleteHandler(item.id)}></button>
           </div>
         );
-      })} */}
+      })}
     </div>
   );
 }
