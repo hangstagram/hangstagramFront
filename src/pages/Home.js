@@ -11,7 +11,7 @@ function Home() {
   const data = useSelector((state)=>{
     return state.dataListSlice
   })
-console.log(data)
+
 
 
   const [dataList, setDataList] = useState([]);
