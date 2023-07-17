@@ -7,6 +7,7 @@ import useCutomEffect from "./Hooks/EffectHook";
 import { CustomQuillStyles, ImageStyled, UploadButton } from "./styled";
 import { PreviewContainer, UploadContainer, UploadLayout } from "./container";
 import UplaodButtonHandler from "./UplaodButtonHandler";
+import { faShip } from "@fortawesome/free-solid-svg-icons";
 
 function Upload() {
   const [content, setContent] = useState("");
@@ -27,7 +28,7 @@ function Upload() {
   return (
     <>
       <CustomQuillStyles>
-        <Header />
+        <Header icon={faShip}/>
         <UploadLayout>
           <div style={{ width: "50%" }}>
             <UploadContainer>
