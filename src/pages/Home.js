@@ -5,7 +5,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePen } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import Header from "../Layout/Header";
+import { useSelector } from "react-redux";
 function Home() {
+
+  const data = useSelector((state)=>{
+    return state.dataListSlice
+  })
+console.log(data)
+
+
   const [dataList, setDataList] = useState([]);
 
   const navigate = useNavigate();
@@ -61,8 +69,7 @@ function Home() {
                   <img
                     alt="img"
                     key={item.id}
-                    src={
-                      "https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg"
+                    src={item.postImg
                     }
                     style={{ width: "280px", height: "500px" }}
                   />
@@ -112,6 +119,14 @@ export const Texts = styled.div`
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
+
+  h1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    margin: 0;
+  }
 `;
 
 const Penstyle = {
