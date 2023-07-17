@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { styled } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePen, faShip } from "@fortawesome/free-solid-svg-icons";
+import { faFilePen } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { Header } from "../Layout/Header";
+import Header from "../Layout/Header";
 function Home() {
   const [dataList, setDataList] = useState([]);
 
@@ -22,32 +22,27 @@ function Home() {
     };
 
     fetchDataList();
-  }, [dataList]);
+  }, []);
 
   const onDeleteHandler = async (id) => {
-    axios.delete(`http://3.34.144.155:8080/api/post/${id}`);
-    setDataList(
-      dataList.filter((item) => {
-        return item.id !== id;
-      })
-    );
+    try {
+      await axios.delete(`http://3.34.144.155:8080/api/post/${id}`);
+      setDataList((prevDataList) =>
+        prevDataList.filter((item) => item.id !== id)
+      );
+    } catch (error) {
+      console.log("error", error);
+    }
   };
+
 
   return (
     <>
       <div style={{ width: "100%" }}>
-        <Header>
-          <div style={{ display: "flex" }}>
-            <FontAwesomeIcon
-              icon={faShip}
-              onClick={() => navigate("/")}
-              style={ShipStyle}
-            />
-            <h2 style={{ marginLeft: "30px" }}>항별 99</h2>
-          </div>
+        <Header icon={faFilePen} >
           <FontAwesomeIcon
             icon={faFilePen}
-            onClick={() => navigate("/upload")}
+            onClick={()=> navigate("/upload")}
             style={Penstyle}
           />
         </Header>
@@ -118,15 +113,6 @@ export const Texts = styled.div`
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
 `;
-
-const ShipStyle = {
-  zIndex: "1",
-  width: "40px",
-  height: "50px",
-  cursor: "pointer",
-  marginTop: "8px",
-  marginLeft: "15px",
-};
 
 const Penstyle = {
   width: "40px",

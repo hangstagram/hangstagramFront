@@ -1,17 +1,38 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { uploadDataList } from "../redux/modules/dataListSlice";
 import styled from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
+import Header from "../Layout/Header";
+import { useNavigate } from "react-router-dom";
 
 function Upload() {
   const [content, setContent] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const windowHeight = window.innerHeight;
+      const editorHeight = windowHeight - 200; // Adjust the value based on your layout
+      setEditorHeight(editorHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const [editorHeight, setEditorHeight] = useState(() => {
+    return window.innerHeight - 200; // Initial height calculation, adjust as needed
+  });
 
   const onChangeContent = (value) => setContent(value);
   const onChangeImage = (e) => {
@@ -41,9 +62,7 @@ function Upload() {
         console.error("Error sending post request.");
       }
     } catch (error) {
-   
       console.error("Error sending post request:", error);
-     
     }
 
     setContent("");
@@ -51,77 +70,104 @@ function Upload() {
       fileInputRef.current.value = "";
     }
 
-    window.location.href = "/";
+    navigate("/");
   };
-
-// post 요청
-
+console.log(selectedImage)
   return (
-    <UploadLayout>
-      <UploadContainer>
-        <ImageStyled ref={fileInputRef} type="file" onChange={onChangeImage} />
-        <div style={{ width: "100%" }}>
-          <ReactQuill
-            theme="snow"
-            name="content"
-            value={content}
-            placeholder="내용"
-            onChange={onChangeContent}
-            style={{
-              width:'100%',
-              height:'260px',
-            }}
-          />
+    <>
+      <CustomQuillStyles>
+        <Header />
+        <UploadLayout>
+          <div style={{width: '50%'}}>
+            <UploadContainer>
+              <ImageStyled
+                ref={fileInputRef}
+                type="file"
+                onChange={onChangeImage}
+              />
+              <ReactQuill
+                theme="snow"
+                name="content"
+                value={content}
+                placeholder="당신이 이야기를 적어보세요.."
+                onChange={onChangeContent}
+                className="custom-quill"
+                style={{
+                  height: `${editorHeight}px`,
+                  width: "100%",
+                }}
+              />
+            </UploadContainer>
+            <div className="button-container">
+              <UploadButton onClick={uploadButtonHandler}>업로드</UploadButton>
+            </div>
+          </div>
           <div
             style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              paddingRight: "0px",
-              marginTop:'50px',
+              width: "50%",
+              backgroundColor: "black",
+              color: "white",
+              padding: "12px",
+              paddingTop: "10px",
             }}
           >
-            <UploadButton onClick={uploadButtonHandler}>업로드</UploadButton>
+            <div>
+              <h1>preview</h1>
+            </div>
+            <div style={{lineHeight:"0.4"}}>
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+           
+            </div>
           </div>
-        </div>
-      </UploadContainer>
-    {content}
-    </UploadLayout>
+        </UploadLayout>
+      </CustomQuillStyles>
+    </>
   );
 }
 
 export default Upload;
 
 const UploadLayout = styled.div`
+  width: 100%;
+  display: flex;
   margin: 0 auto;
-  width: 800px;
-  padding: 12px;
-  background-color: blue;
+
+  .button-container {
+    background-color: rgb(47,47,47);
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px;
+    flex-direction: row;
+  }
 `;
 
 const UploadContainer = styled.div`
-  background-color: yellow;
-  width: 97%;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   gap: 6px;
   padding: 12px;
+  margin: 0 auto;
+  background-color: rgb(205, 211, 214);
 `;
 
-// const InputStyled = styled.input`
-//   background-color: green;
-//   width: 90%;
-//   height: 295px;
-// `;
-
 const UploadButton = styled.button`
-  background-color: black;
+  background-color: #96F2D7;
   width: 80px;
   height: 40px;
-  border-radius: 12px;
-  color: white;
+  border: none;
+  border-radius: 5px;
+  color: black;
 `;
 
 const ImageStyled = styled.input`
-  background-color: pink;
-  width: 60%;
-  height: 300px;
+  width: 100%;
+  height: 30px;
+`;
+
+const CustomQuillStyles = styled.div`
+  .custom-quill .ql-container {
+    border: none !important;
+    border-radius: 0 !important;
+  }
 `;
