@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 function Upload() {
   const [content, setContent] = useState("");
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [postImg, setpostImg] = useState(null);
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -36,25 +36,34 @@ function Upload() {
 
   const onChangeContent = (value) => setContent(value);
   const onChangeImage = (e) => {
-    setSelectedImage(e.target.files[0]);
+    setpostImg(e.target.files[0]);
   };
 
+
+
   const uploadButtonHandler = async () => {
-    dispatch(
-      uploadDataList({
-        content,
-        selectedImage,
-      })
-    );
+    const formData = new FormData()
+    formData.append("content", content)
+    formData.append('image', fileInputRef.current.files[0])
 
     try {
-      const response = await axios.post("http://3.34.144.155:8080/api/post", {
-        content,
+      dispatch(
+        uploadDataList({
+          content,
+          postImg,
+        })
+      );
+  
+      const response = await axios.post("http://3.34.144.155:8080/api/post",formData, {
+       headers:{
+        "Content-Type": 'multipart/form-data'
+       }
       });
-
+  
       if (response.status === 200) {
         console.log("Post request sent successfully!");
         setContent("");
+        setpostImg(null);
         if (fileInputRef.current) {
           fileInputRef.current.value = "";
         }
@@ -64,15 +73,16 @@ function Upload() {
     } catch (error) {
       console.error("Error sending post request:", error);
     }
-
+  
     setContent("");
+    setpostImg(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
-
+  
     navigate("/");
   };
-console.log(selectedImage)
+  
   return (
     <>
       <CustomQuillStyles>
@@ -138,7 +148,9 @@ const UploadLayout = styled.div`
     justify-content: flex-end;
     padding: 5px;
     flex-direction: row;
+    z-index: 1;
   }
+
 `;
 
 const UploadContainer = styled.div`
@@ -158,6 +170,11 @@ const UploadButton = styled.button`
   border: none;
   border-radius: 5px;
   color: black;
+
+ &:hover{
+  background-color: #71C9B8;
+  box-shadow: 0px 0px 5px rgba(0,0,0, 0.3);
+ }
 `;
 
 const ImageStyled = styled.input`
@@ -169,5 +186,8 @@ const CustomQuillStyles = styled.div`
   .custom-quill .ql-container {
     border: none !important;
     border-radius: 0 !important;
+    height: 93%;
   }
 `;
+
+

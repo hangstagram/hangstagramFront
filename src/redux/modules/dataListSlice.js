@@ -5,7 +5,7 @@ const initialState = {
     {
       id: 1,
       content: "어려워요",
-      image: null,
+      postImg: null,
     },
   ],
 };

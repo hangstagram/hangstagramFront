@@ -5,7 +5,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePen, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import Header from "../Layout/Header";
+import { useSelector } from "react-redux";
 function Home() {
+
+  const data = useSelector((state)=>{
+    return state.dataListSlice
+  })
+console.log(data)
+
+
   const [dataList, setDataList] = useState([]);
   const [isOpen, setIsopen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
@@ -73,8 +81,7 @@ function Home() {
                   <img
                     alt="img"
                     key={item.id}
-                    src={
-                      "https://ggsc.s3.amazonaws.com/images/uploads/The_Science-Backed_Benefits_of_Being_a_Dog_Owner.jpg"
+                    src={item.postImg
                     }
                     style={{ width: "280px", height: "500px" }}
                   />
