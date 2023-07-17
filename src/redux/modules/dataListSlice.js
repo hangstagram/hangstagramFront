@@ -15,7 +15,7 @@ const dataListSlice = createSlice({
   initialState,
   reducers: {
     uploadDataList: (state, action) => {
-      state.list = [...state.list, action.payload];
+      state.list = [action.payload, ...state.list]
     },
     deleteDataList: (state, action) => {
       state.list = state.list.filter((item) => item.id !== action.payload);
