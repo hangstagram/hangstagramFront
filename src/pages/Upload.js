@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { uploadDataList } from "../redux/modules/dataListSlice";
 import styled from "styled-components";
-import ReactQuill from "react-quill";
+import ReactQuill, { contextType } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import Header from "../Layout/Header";
@@ -39,27 +39,34 @@ function Upload() {
     setpostImg(e.target.files[0]);
   };
 
-
-
   const uploadButtonHandler = async () => {
     const formData = new FormData()
-    formData.append("content", content)
     formData.append('image', fileInputRef.current.files[0])
+    let veriables = {
+      "content" : content
+    }
+    formData.append("requestDto", new Blob([JSON.stringify(veriables)], {type: "application/json"}))
+    
 
     try {
-      dispatch(
-        uploadDataList({
-          content,
-          postImg,
-        })
-      );
-  
+      // dispatch(
+      //   uploadDataList({
+      //     content,
+      //     postImg,
+      //   })
+      // );
+
       const response = await axios.post("http://3.34.144.155:8080/api/post",formData, {
        headers:{
         "Content-Type": 'multipart/form-data'
        }
       });
-  
+
+      //  --  test code for only image  --//
+      // const response = await axios.post("http://3.34.144.155:8080/api/post/test",formData)
+      // console.log("response", response)
+      // -------------- // 
+      
       if (response.status === 200) {
         console.log("Post request sent successfully!");
         setContent("");
