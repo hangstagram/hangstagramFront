@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 import Header from "../Layout/Header";
 function Home() {
   const [dataList, setDataList] = useState([]);
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDataList = async () => {
@@ -66,7 +67,10 @@ function Home() {
                     style={{ width: "280px", height: "500px" }}
                   />
                 </Images>
-                <button onClick={()=>onDeleteHandler(item.id)}>삭제</button>
+
+                <div>
+                  <button onClick={() => onDeleteHandler(item.id)}>삭제</button>
+                </div>
                 <Texts>
                   <div dangerouslySetInnerHTML={{ __html: item.content }} />
                 </Texts>
@@ -81,7 +85,7 @@ function Home() {
 
 export default Home;
 
-const Posts = styled.div`
+export const Posts = styled.div`
   width: 300px;
   height: 400px;
   margin: 20px;
@@ -89,21 +93,25 @@ const Posts = styled.div`
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
   flex-direction: column;
+  cursor: pointer;
 `;
 
-const Images = styled.div`
+export const Images = styled.div`
   width: 100%;
   height: 350px;
   display: flex;
   margin-left: 10px;
   align-items: center;
   overflow: hidden;
+  flex-direction: column;
 `;
 
-const Texts = styled.div`
-  width: 100%;
+export const Texts = styled.div`
   overflow: hidden;
-  color: black;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
 `;
 
 const Penstyle = {
@@ -112,3 +120,8 @@ const Penstyle = {
   cursor: "pointer",
   marginTop: "8px",
 };
+
+// const DetailButton = styled.button`
+//   margin-left: 200px;
+// `;
+
