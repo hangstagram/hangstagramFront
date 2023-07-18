@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePen, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faFilePen} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import Header from "../Layout/Header";
-
-import {
-  ImageContiainer,
-  PostContainer,
-  TextContainer,
-  DataListContainer,
-} from "./Home/Container";
-import { Penstyle } from "./Home/Style";
 import { useDispatch, useSelector } from "react-redux";
-import { __fetchDataList } from "../redux/modules/dataListSlice";
-import Modal from "./Home/Modal";
+import { __fetchDataList } from "../../redux/modules/dataListSlice";
+import { Penstyle } from "./Style";
+import { DataListContainer, ImageContiainer, PostContainer, TextContainer } from "./Container";
+import Modal from "./Modal";
+import Header from "../../Layout/Header"
+
 
 function Home() {
   const [isOpen, setIsopen] = useState(false);
@@ -27,9 +22,6 @@ function Home() {
     setIsopen(true);
     setSelectedPost(id)
   };
-
-
-
   useEffect(() => {
     dispatch(__fetchDataList())
       .unwrap()
