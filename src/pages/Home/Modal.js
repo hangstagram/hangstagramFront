@@ -16,14 +16,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const Modal = ({ isOpen, setIsopen, selectedPost, dataList }) => {
   const selected = dataList.find((item) => item.id === selectedPost);
-  const navigate = useNavigate()
 
   const DeleteHandler = async (id) => {
     const isConfirmed = window.confirm("정말로 삭제하시겠습니까?");
     if (isConfirmed) {
       try {
         await axios.delete(`http://3.34.144.155:8080/api/post/${id}`);
-        navigate("/")
       } catch (error) {
         console.log("error", error);
       }
