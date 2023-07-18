@@ -1,13 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+import axios from "axios";
+
+export const __fetchDataList = createAsyncThunk(
+  "fetchDataList",
+  async (payload, thunkAPI) => {
+    try {
+      const response = await axios.get("http://3.34.144.155:8080/api/post");
+      // console.log(response.data)
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      console.log("error", error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const initialState = {
-  list: [
-    {
-      id: 1,
-      content: "어려워요",
-      postImg: null,
-    },
-  ],
+  list: [],
+  isLoading: false,
+  isError : false,
+  error: null,
 };
 
 const dataListSlice = createSlice({
@@ -15,13 +28,29 @@ const dataListSlice = createSlice({
   initialState,
   reducers: {
     uploadDataList: (state, action) => {
-      state.list = [action.payload, ...state.list]
+      state.list = [action.payload, ...state.list];
     },
     deleteDataList: (state, action) => {
       state.list = state.list.filter((item) => item.id !== action.payload);
     },
   },
+  extraReducers: {
+    [__fetchDataList.pending]: (state, action) => {
+      state.isLoading =true
+    },
+    [__fetchDataList.fulfilled]: (state, action) => {
+      state.isLoading = false
+      state.isError = false
+      state.list = action.payload
+    },
+    [__fetchDataList.rejected]: (state, action) => {
+      state.isLoading = false
+      state.isError = true
+      state.error = action.payload
+    }
+  }
 });
 
-export const { uploadDataList, deleteDataList } = dataListSlice.actions;
+export const { uploadDataList, deleteDataList } =
+  dataListSlice.actions;
 export default dataListSlice.reducer;

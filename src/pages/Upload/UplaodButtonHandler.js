@@ -8,7 +8,6 @@ const UplaodButtonHandler = async (
   setContent
 ) => {
 
-
   const formData = new FormData()
   formData.append('image', postImg)
   let veriables = {
