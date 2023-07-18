@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import {
   DateContiner,
   ImageContiainer,
@@ -8,11 +10,28 @@ import {
   ModalTextContiner,
   ModalWrap,
 } from "./Container";
+import { DeleteButton } from "./Style";
 import { ModalClose } from "./Style";
-
-const Modal = ({isOpen, setIsopen, selectedPost, dataList}) => {
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+const Modal = ({ isOpen, setIsopen, selectedPost, dataList }) => {
   const selected = dataList.find((item) => item.id === selectedPost);
+  const navigate = useNavigate()
+
+  const DeleteHandler = async (id) => {
+    const isConfirmed = window.confirm("정말로 삭제하시겠습니까?");
+    if (isConfirmed) {
+      try {
+        await axios.delete(`http://3.34.144.155:8080/api/post/${id}`);
+        navigate("/")
+      } catch (error) {
+        console.log("error", error);
+      }
+    } else {
+      return;
+    }
+    window.location.reload()
+  };
 
   return (
     <div>
@@ -39,6 +58,11 @@ const Modal = ({isOpen, setIsopen, selectedPost, dataList}) => {
                 <div dangerouslySetInnerHTML={{ __html: selected.content }} />
               </ModalTextContiner>
             </ModalWrap>
+            <div>
+              <DeleteButton onClick={() => DeleteHandler(selectedPost)}>
+                <FontAwesomeIcon icon={faTrashCan} />
+              </DeleteButton>
+            </div>
           </ModalContiner>
         </div>
       )}
