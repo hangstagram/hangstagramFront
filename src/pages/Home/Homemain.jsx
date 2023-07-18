@@ -9,7 +9,7 @@ import { DataListContainer, ImageContiainer, PostContainer, TextContainer } from
 import Modal from "./Modal";
 import Header from "../../Layout/Header"
 
-function Home() {
+function Homemain() {
   const [isOpen, setIsopen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
   const dataList = useSelector((state) => state.dataListSlice.list);
@@ -71,4 +71,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Homemain;
