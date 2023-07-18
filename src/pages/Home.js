@@ -6,12 +6,19 @@ import { useNavigate } from "react-router-dom";
 import Header from "../Layout/Header";
 import { DateContiner, ImageContiainer, ModalContiner, ModalHeader, ModalOveray, ModalTextContiner, ModalWrap, PostContainer, TextContainer } from "./Home/Container";
 import { DeleteButton, ModalClose, Penstyle } from "./Home/Style";
+import { useDispatch, useSelector } from "react-redux";
+import { __fetchDataList, deleteDataList } from "../redux/modules/dataListSlice";
 function Home() {
-  const [dataList, setDataList] = useState([]);
+  // const [dataList, setDataList] = useState([]);
   const [isOpen, setIsopen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
+  const dataList = useSelector((state)=> state.dataListSlice.list)
+
+    // console.log("dataList1", dataList)
+
 
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const handlePostClick = (id) => {
     setIsopen(true);
     setSelectedPost(id);
@@ -20,32 +27,23 @@ function Home() {
   const selected = dataList.find((item) => item.id === selectedPost);
 
   useEffect(() => {
-    const fetchDataList = async () => {
-      await axios
-        .get("http://3.34.144.155:8080/api/post")
-        .then((response) => {
-          // console.log(response)
-          setDataList(response.data);
-        })
-        .catch((error) => console.log("error", error));
-    };
-
-    fetchDataList();
-  }, []);
+    dispatch(__fetchDataList())
+      .unwrap()
+      .catch((error) => console.log('Error fetching data:', error));
+  }, [dispatch]);
 
   const onDeleteHandler = async (id) => {
     const isConfirmed = window.confirm("정말로 삭제하시겠습니까?");
     if (isConfirmed) {
       try {
         await axios.delete(`http://3.34.144.155:8080/api/post/${id}`);
-        setDataList((prevDataList) =>
-          prevDataList.filter((item) => item.id !== id)
-        );
+        dispatch(deleteDataList(id))
+          
       } catch (error) {
         console.log("error", error);
       }
     } else {
-      return null;
+      return
     }
   };
 
@@ -62,12 +60,14 @@ function Home() {
         <div
           style={{
             display: "flex",
-            flexDirection: "row",
+            flexDirection: "column",
             width: "100%",
             flexWrap: "wrap",
+            justifyContent:"center",
+            alignItems:'center'
           }}
         >
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+          
             {dataList.map((item) => {
               return (
                 <PostContainer key={item.id} onClick={() => handlePostClick(item.id)}>
@@ -79,7 +79,7 @@ function Home() {
                       style={{ width: "280px", height: "500px" }}
                     />
                   </ImageContiainer>
-                  <div>
+                  <div> 
                     <DeleteButton onClick={() => onDeleteHandler(item.id)}>
                       <FontAwesomeIcon icon={faTrashCan} />
                     </DeleteButton>
@@ -89,8 +89,8 @@ function Home() {
                   </TextContainer>
                 </PostContainer>
               );
-            })}
-          </div>
+            })} 
+      
 
           {isOpen && (
             <div>
