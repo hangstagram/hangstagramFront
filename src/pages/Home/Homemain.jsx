@@ -9,7 +9,6 @@ import { DataListContainer, ImageContiainer, PostContainer, TextContainer } from
 import Modal from "./Modal";
 import Header from "../../Layout/Header"
 
-
 function Home() {
   const [isOpen, setIsopen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
