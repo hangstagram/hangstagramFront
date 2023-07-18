@@ -13,7 +13,7 @@ import {
 import { DeleteButton } from "./Style";
 import { ModalClose } from "./Style";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 const Modal = ({ isOpen, setIsopen, selectedPost, dataList }) => {
   const selected = dataList.find((item) => item.id === selectedPost);
 
