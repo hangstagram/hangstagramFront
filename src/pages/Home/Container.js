@@ -92,4 +92,24 @@ const PostContainer = styled.div`
   cursor: pointer;
 `;
 
-export {ImageContiainer, TextContainer, ModalContiner, ModalOveray, ModalHeader, ModalWrap, ModalTextContiner, DateContiner, PostContainer}
+const DataListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;
+
+export {
+  ImageContiainer,
+  TextContainer,
+  ModalContiner,
+  ModalOveray,
+  ModalHeader,
+  ModalWrap,
+  ModalTextContiner,
+  DateContiner,
+  PostContainer,
+  DataListContainer,
+};
