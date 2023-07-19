@@ -5,14 +5,13 @@ import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [input, setInput] = useState({
-    id: "",
+    user: "",
     pw: "",
-    // user:"",
-    // email: "",
+    email: "",
   });
 
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+
   const handleInput = (e) => {
     setInput({
       ...input,
@@ -24,8 +23,10 @@ function Register() {
     const idRegex = /^[a-zA-Z0-9]{4,12}$/;
 
     if (!idRegex.test(input.id)) {
-      setInput("");
-      window.alert("아이디는 4자리 이상 12자리 이하입니다 영어와 숫자가 포함되어야 합니다");
+      setInput({ user: "", pw: "", email: "" });
+      window.alert(
+        "아이디는 4자리 이상 12자리 이하입니다 영어와 숫자가 포함되어야 합니다"
+      );
     } else {
       setInput((prev) => ({
         ...prev,
@@ -39,8 +40,10 @@ function Register() {
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/;
 
     if (!pwRegex.test(input.pw)) {
-      setInput("");
-      window.alert("비밀번호는 8자리 이상 15자리 이하입니다 영문과 특수문자를 포함해야 합니다");
+      setInput({ user: "", pw: "", email: "" });
+      window.alert(
+        "비밀번호는 8자리 이상 15자리 이하입니다 영문과 특수문자를 포함해야 합니다"
+      );
     } else {
       setInput((prevErrors) => ({
         ...prevErrors,
@@ -52,7 +55,7 @@ function Register() {
     const nameRegex = /^[가-힣]{2,5}$/;
 
     if (!nameRegex.test(input.name)) {
-      setInput("");
+      setInput({ user: "", pw: "", email: "" });
       window.alert("2자리 이상 5자리 이하 한글입니다");
     } else {
       setInput((prevErrors) => ({
@@ -66,7 +69,7 @@ function Register() {
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
     if (!emailRegex.test(input.email)) {
-      setInput("");
+      setInput({ user: "", pw: "", email: "" });
       window.alert("이메일 형식이 아닙니다");
     } else {
       setInput((prevErrors) => ({
@@ -82,94 +85,119 @@ function Register() {
     // validateName()
     // validateEmail()
     try {
-      const response = await axios.post("http://3.34.144.155:8080/api/signup", {
-        id: input.id,
-        password: input.pw
-      },
-      {withCredentials: true })
+      const response = await axios.post(
+        "http://3.34.144.155:8080/api/user/signup",
+        {
+          username: input.user,
+          password: input.pw,
+          email: input.email,
+        },
+        { withCredentials: true }
+      );
+
       console.log("response", response);
-      navigate("/login")
+      navigate("/login");
     } catch (error) {
-      console.log('error', error)
-      setInput('')
+      setInput({ user: "", pw: "", email: "" });
+      console.log("error", error);
       // window.alert(`Error: ${error.response.data.message}`);
     }
   };
 
   const onRegister = () => {
-    if (input.id !=='' && input.pw !=='') {
-      handleRegister()
+    if (input.id !== "" && input.pw !== "") {
+      handleRegister();
     } else {
-      window.alert('아이디와 비밀번호를 입력하세요')
-      setInput('')
+      window.alert("아이디와 비밀번호를 입력하세요");
+      setInput({ user: "", pw: "", email: "" });
     }
-  } 
+  };
 
   return (
-    <div>
-      <RegisterWrap>
+    <RegisterWrap>
+      <div>
+        <TextBox>닉네임</TextBox>
         <InputBox
           type="text"
-          placeholder="ID"
-          value={input.id}
-          name="id"
-          onChange={handleInput}
-        />
-        <InputBox
-          type="text"
-          placeholder="password"
-          value={input.pw}
-          name="pw"
-          onChange={handleInput}
-        />
-        {/* <InputBox
-          type="text"
-          placeholder="username"
+          placeholder=""
           value={input.user}
           name="user"
           onChange={handleInput}
         />
+      </div>
+      <div>
+        <TextBox>비밀번호</TextBox>
         <InputBox
           type="text"
-          placeholder="E-mail"
+          placeholder=""
+          value={input.pw}
+          name="pw"
+          onChange={handleInput}
+        />
+      </div>
+      <div>
+        <TextBox>이메일</TextBox>
+        <InputBox
+          type="text"
+          placeholder=""
           value={input.email}
           name="email"
-          onChange={handleInput} */}
-        {/* /> */}
-        <RegisterButton onClick={onRegister}>회원가입</RegisterButton>
-      </RegisterWrap>
-    </div>
+          onChange={handleInput}
+        />
+      </div>
+      <RegisterButton onClick={onRegister}>회원가입</RegisterButton>
+      <Loginbutton onClick={() => navigate("/login")}>로그인하러</Loginbutton>
+    </RegisterWrap>
   );
 }
 
 export default Register;
 
 export const RegisterWrap = styled.div`
-  width: 50vw;
+  width: 30vw;
   height: 50vh;
   margin: 100px auto;
-  padding: 20px 20px 80px;
+  /* background-color: #96FFFF; */
+  padding: 20px 20px 40px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   gap: 20px;
 `;
 
 export const InputBox = styled.input`
-  width: 80%;
-  height: 10%;
+  width: 120px;
+  height: 30px;
   border: 1px solid gray;
   border-radius: 10px;
 `;
 
 export const RegisterButton = styled.button`
-  width: 80%;
+  width: 200px;
   background-color: #fff;
-  height: 10%;
+  height: 40px;
   border: 1px solid gray;
   border-radius: 10px;
   cursor: pointer;
+`;
+
+export const Loginbutton = styled.button`
+  width: 200px;
+  background-color: #fff;
+  height: 40px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  cursor: pointer;
+`;
+
+export const TextBox = styled.button`
+  width: 80px;
+  height: 30px;
+  border: none;
+  background-color: #fff;
+  font-size: 16px;
+  text-align: left;
 `;
