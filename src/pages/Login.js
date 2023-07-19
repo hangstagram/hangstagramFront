@@ -33,7 +33,7 @@ function Login() {
 
   const handelLogin = async () => {
     try {
-      const { data } = await axios.post(
+      const {headers} = await axios.post(
         "/api/user/login",
         {
           username: input.user,
@@ -42,12 +42,8 @@ function Login() {
         { withCredentials: true }
       );
 
-      // cookie.set("username", jwtDecode(data.token).username, {
-      //   path: "/",
-      //   maxAge: 600,
-      // });
-      cookie.set("accessToken", data.token, { path: "/", maxAge: 600 });
-      console.log(data);
+      localStorage.setItem("isLogin", ` ${headers.authorization}`);
+      console.log(headers);
       navigate("/");
     } catch (error) {
       console.log(`error, ${error}`);
