@@ -24,7 +24,7 @@ function Login() {
   };
 
   const LoginButton = () => {
-    if (input.id === "" || input.pw === "") {
+    if (input.user === "" || input.pw === "") {
       window.alert("아이디와 비밀번호를 모두 입력하세요");
     } else {
       handelLogin();
@@ -33,22 +33,25 @@ function Login() {
 
   const handelLogin = async () => {
     try {
-      const { data } = await axios.get(
-        "http://3.34.144.155:8080/api/user/login",
+      const { data } = await axios.post(
+        "/api/user/login",
         {
-          username: input.username,
-          password: input.password,
+          username: input.user,
+          password: input.pw,
         },
         { withCredentials: true }
       );
 
-      cookie.set("id", jwtDecode(data.token).id, { path: "/", maxAge: 600 });
+      // cookie.set("username", jwtDecode(data.token).username, {
+      //   path: "/",
+      //   maxAge: 600,
+      // });
       cookie.set("accessToken", data.token, { path: "/", maxAge: 600 });
       console.log(data);
       navigate("/");
     } catch (error) {
       console.log(`error, ${error}`);
-      setInput({ id: "", pw: "" });
+      setInput({ user: "", pw: "" });
     }
   };
 
@@ -59,13 +62,13 @@ function Login() {
         <InputBox
           type="text"
           placeholder=""
-          value={input.id}
-          name="id"
+          value={input.user}
+          name="user"
           onChange={handleInput}
         />
       </div>
       <div>
-      <TextBox>비밀번호</TextBox>
+        <TextBox>비밀번호</TextBox>
         <InputBox
           type="text"
           placeholder=""
@@ -75,8 +78,7 @@ function Login() {
         />
       </div>
       <Loginbutton onClick={LoginButton}>로그인</Loginbutton>
-      <Loginbutton onClick={()=>navigate("/register")}>회원가입</Loginbutton>
-
+      <Loginbutton onClick={() => navigate("/register")}>회원가입</Loginbutton>
     </RegisterWrap>
   );
 }

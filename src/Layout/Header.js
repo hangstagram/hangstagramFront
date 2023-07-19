@@ -10,6 +10,7 @@ function Header({ icon }) {
   return (
     <HeaderStyle>
       <div style={{ display: "flex" }}>
+      
         <FontAwesomeIcon
           icon={faShip}
           onClick={() => navigate("/")}
