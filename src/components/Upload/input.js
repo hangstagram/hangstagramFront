@@ -1,15 +1,14 @@
-import React, { useRef, useState } from "react";
+
+import { useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Header from "../../Layout/Header";
 import { useNavigate } from "react-router-dom";
-import useCutomEffect from "./Hooks/EffectHook";
-import { CustomQuillStyles, ImageStyled, UploadButton } from "./styled";
 import { PreviewContainer, UploadContainer, UploadLayout } from "./container";
+import { CustomQuillStyles, ImageStyled, UploadButton } from "./styled";
 import UplaodButtonHandler from "./UplaodButtonHandler";
-import { faShip } from "@fortawesome/free-solid-svg-icons";
+import useCustomEffect from "./Hooks/EffectHook"
 
-function Upload() {
+function Input() {
   const [content, setContent] = useState("");
   const [postImg, setpostImg] = useState(null);
   const [editorHeight, setEditorHeight] = useState(() => {
@@ -19,8 +18,7 @@ function Upload() {
   const navigate = useNavigate();
 
   const fileInputRef = useRef(null);
-
-  useCutomEffect(editorHeight, setEditorHeight);
+  useCustomEffect(editorHeight, setEditorHeight)
 
   const onChangeContent = (value) => setContent(value);
   const onChangepostImg = (e) => setpostImg(e.target.files[0]);
@@ -28,7 +26,6 @@ function Upload() {
   return (
     <>
       <CustomQuillStyles>
-        <Header icon={faShip}/>
         <UploadLayout>
           <div style={{ width: "50%" }}>
             <UploadContainer>
@@ -80,4 +77,4 @@ function Upload() {
   );
 }
 
-export default Upload;
+export default Input;
