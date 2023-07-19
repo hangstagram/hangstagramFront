@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import jwtDecode from "jwt-decode";
-import Cookies from "universal-cookie";
 import { InputBox, RegisterWrap, TextBox } from "./Register";
 import { Loginbutton } from "./Register";
 
@@ -11,8 +9,6 @@ function Login() {
     user: "",
     pw: "",
   });
-
-  const cookie = new Cookies();
 
   const navigate = useNavigate();
 
