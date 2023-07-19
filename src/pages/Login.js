@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { InputBox, RegisterWrap, TextBox } from "./Register";
-import { Loginbutton } from "./Register";
+import { InputBox, Loginbutton, RegisterWrap, TextBox } from "../components/Register/Style";
+
 
 function Login() {
   const [input, setInput] = useState({

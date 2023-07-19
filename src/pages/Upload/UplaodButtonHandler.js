@@ -1,5 +1,4 @@
-import axios from "axios";
-
+import api from "../../Api/api"
 const UplaodButtonHandler = async (
   navigate,
   content,
@@ -16,8 +15,8 @@ const UplaodButtonHandler = async (
   formData.append("requestDto", new Blob([JSON.stringify(veriables)], {type: "application/json"}))
   
   try {
-    const response = await axios.post(
-      "http://3.34.144.155:8080/api/post",
+    const response = await api.post(
+      "/post",
       formData,
       {
         headers: {
