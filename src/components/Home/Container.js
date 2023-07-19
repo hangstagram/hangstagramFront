@@ -94,7 +94,7 @@ const PostContainer = styled.div`
 
 const DataListContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   width: 100%;
   flex-wrap: wrap;
   justify-content: center;

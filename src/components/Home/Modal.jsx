@@ -21,7 +21,11 @@ const Modal = ({ isOpen, setIsopen, selectedPost, dataList }) => {
     const isConfirmed = window.confirm("정말로 삭제하시겠습니까?");
     if (isConfirmed) {
       try {
-        await api.delete(`/post/${id}`);
+        await api.delete(`/post/${id}`,{
+          headers: {
+            authorization: `${localStorage.getItem("isLogin")}`,
+          },withCredentials:true
+        });
       } catch (error) {
         console.log("error", error);
       }
@@ -39,7 +43,7 @@ const Modal = ({ isOpen, setIsopen, selectedPost, dataList }) => {
           <ModalContiner>
             <ModalHeader>
               <DateContiner>
-                {/* 작성일 : {selected.createdAt.slice(2, 10)} */}
+                작성일 : {selected.createdAt.slice(2, 10)}
               </DateContiner>
               <DeleteButton  onClick={() => DeleteHandler(selectedPost)}>
                 <FontAwesomeIcon icon={faTrashCan} />
