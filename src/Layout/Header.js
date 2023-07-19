@@ -7,6 +7,11 @@ import { useNavigate } from "react-router-dom";
 function Header({ icon }) {
   const navigate = useNavigate(); 
 
+  const handelLogout = () => {
+    localStorage.removeItem("isLogin")
+    navigate("/login")
+  }
+
   return (
     <HeaderStyle>
       <div style={{ display: "flex" }}>
@@ -23,11 +28,14 @@ function Header({ icon }) {
      }}
      >hangStargram99</h2>
       </div>
+      <div style={{display: "flex", gap: "20px"}}>
       <FontAwesomeIcon
         icon={icon}
         onClick={() => navigate("/upload")}
         style={PenStyle}
       />
+      <h3 style={{cursor: "pointer"}} onClick={handelLogout}>로그아웃</h3>
+      </div>
     </HeaderStyle>
   )
 }
