@@ -7,7 +7,6 @@ export const __fetchDataList = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await axios.get("http://3.34.144.155:8080/api/post");
-      // console.log(response.data)
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log("error", error);
