@@ -17,6 +17,9 @@ const ModalClose = styled.button`
 
 const DeleteButton = styled.button`
   margin-left: auto;
+  border: none;
+  background-color: #FFF;
+  cursor: pointer;
 `;
 
 export { Penstyle, ModalClose, DeleteButton };
