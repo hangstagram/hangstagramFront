@@ -100,7 +100,6 @@ function Register() {
     } catch (error) {
       setInput({ user: "", pw: "", email: "" });
       console.log("error", error);
-      // window.alert(`Error: ${error.response.data.message}`);
     }
   };
 
