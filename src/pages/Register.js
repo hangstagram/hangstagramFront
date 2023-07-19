@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import api from "../Api/api"
 import { useNavigate } from "react-router-dom";
-import { InputBox, Loginbutton, RegisterButton, RegisterWrap, TextBox } from "../components/Register/Style";
+import { InputBox, Loginbutton, RegisterButton, TextBox } from "../components/Register/Style";
+import { RegisterWrap } from "../components/Register/Container";
 
 
 function Register() {
