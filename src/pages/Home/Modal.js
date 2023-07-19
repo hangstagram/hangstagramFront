@@ -12,7 +12,7 @@ import {
 } from "./Container";
 import { DeleteButton } from "./Style";
 import { ModalClose } from "./Style";
-import axios from "axios";
+import api from "../../Api/api"
 
 const Modal = ({ isOpen, setIsopen, selectedPost, dataList }) => {
   const selected = dataList.find((item) => item.id === selectedPost);
@@ -21,7 +21,7 @@ const Modal = ({ isOpen, setIsopen, selectedPost, dataList }) => {
     const isConfirmed = window.confirm("정말로 삭제하시겠습니까?");
     if (isConfirmed) {
       try {
-        await axios.delete(`http://3.34.144.155:8080/api/post/${id}`);
+        await api.delete(`/post/${id}`);
       } catch (error) {
         console.log("error", error);
       }

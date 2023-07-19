@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-import axios from "axios";
+import api from "../../Api/api";
 
 export const __fetchDataList = createAsyncThunk(
   "fetchDataList",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.get("http://3.34.144.155:8080/api/post/search");
+      const response = await api.get("/post/search");
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log("error", error);
