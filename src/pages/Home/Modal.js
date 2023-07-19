@@ -41,6 +41,9 @@ const Modal = ({ isOpen, setIsopen, selectedPost, dataList }) => {
               <DateContiner>
                 {/* 작성일 : {selected.createdAt.slice(2, 10)} */}
               </DateContiner>
+              <DeleteButton  onClick={() => DeleteHandler(selectedPost)}>
+                <FontAwesomeIcon icon={faTrashCan} />
+              </DeleteButton>
               <ModalClose onClick={() => setIsopen(false)}>X</ModalClose>
             </ModalHeader>
             <ModalWrap>
@@ -57,9 +60,7 @@ const Modal = ({ isOpen, setIsopen, selectedPost, dataList }) => {
               </ModalTextContiner>
             </ModalWrap>
             <div>
-              <DeleteButton onClick={() => DeleteHandler(selectedPost)}>
-                <FontAwesomeIcon icon={faTrashCan} />
-              </DeleteButton>
+              
             </div>
           </ModalContiner>
         </div>
