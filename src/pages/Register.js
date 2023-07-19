@@ -82,16 +82,28 @@ function Register() {
     // validateName()
     // validateEmail()
     try {
-      const response = await axios.post("http://3.38.191.164/register", {
+      const response = await axios.post("http://3.34.144.155:8080/api/signup", {
         id: input.id,
         password: input.pw
-      });
+      },
+      {withCredentials: true })
       console.log("response", response);
       navigate("/login")
     } catch (error) {
-      window.alert(`Error: ${error.response.data.message}`);
+      console.log('error', error)
+      setInput('')
+      // window.alert(`Error: ${error.response.data.message}`);
     }
   };
+
+  const onRegister = () => {
+    if (input.id !=='' && input.pw !=='') {
+      handleRegister()
+    } else {
+      window.alert('아이디와 비밀번호를 입력하세요')
+      setInput('')
+    }
+  } 
 
   return (
     <div>
@@ -124,7 +136,7 @@ function Register() {
           name="email"
           onChange={handleInput} */}
         {/* /> */}
-        <RegisterButton onClick={handleRegister}>회원가입</RegisterButton>
+        <RegisterButton onClick={onRegister}>회원가입</RegisterButton>
       </RegisterWrap>
     </div>
   );
