@@ -2,11 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../Api/api";
 
 export const __fetchDataList = createAsyncThunk(
-  "dataList/fetchDataList", // 액션 이름 문자열로 지정
+  "fetchDataList",
   async (payload, thunkAPI) => {
     try {
       const response = await api.get("/post/search");
-      return response.data;
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       console.log("error", error);
       return thunkAPI.rejectWithValue(error);
@@ -17,7 +17,7 @@ export const __fetchDataList = createAsyncThunk(
 const initialState = {
   list: [],
   isLoading: false,
-  isError: false,
+  isError : false,
   error: null,
 };
 
@@ -32,25 +32,23 @@ const dataListSlice = createSlice({
       state.list = state.list.filter((item) => item.id !== action.payload);
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(__fetchDataList.pending, (state, action) => {
-        state.isLoading = true;
-        state.isError = false;
-        state.error = null;
-      })
-      .addCase(__fetchDataList.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.list = action.payload;
-      })
-      .addCase(__fetchDataList.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.error = action.payload;
-      });
-  },
+  extraReducers: {
+    [__fetchDataList.pending]: (state, action) => {
+      state.isLoading =true
+    },
+    [__fetchDataList.fulfilled]: (state, action) => {
+      state.isLoading = false
+      state.isError = false
+      state.list = action.payload
+    },
+    [__fetchDataList.rejected]: (state, action) => {
+      state.isLoading = false
+      state.isError = true
+      state.error = action.payload
+    }
+  }
 });
 
-export const { uploadDataList, deleteDataList } = dataListSlice.actions;
+export const { uploadDataList, deleteDataList } =
+  dataListSlice.actions;
 export default dataListSlice.reducer;
