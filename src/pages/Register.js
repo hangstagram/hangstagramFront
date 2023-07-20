@@ -84,6 +84,7 @@ function Register() {
   // };
 
   const handleRegister = async () => {
+    if (input.id !== "" && input.pw !== "") {
     // vaildateId();
     // validatePw();
     // validateName()
@@ -106,15 +107,7 @@ function Register() {
       console.log("error", error);
     }
   };
-
-  const onRegister = () => {
-    if (input.id !== "" && input.pw !== "") {
-      handleRegister();
-    } else {
-      window.alert("아이디와 비밀번호를 입력하세요");
-      setInput({ user: "", pw: "", email: "" });
-    }
-  };
+}
 
   return (
     <RegisterWrap>
@@ -148,7 +141,7 @@ function Register() {
           onChange={handleInput}
         />
       </div>
-      <RegisterButton onClick={onRegister}>회원가입</RegisterButton>
+      <RegisterButton onClick={handleRegister}>회원가입</RegisterButton>
       <Loginbutton onClick={() => navigate("/login")}>로그인하러</Loginbutton>
     </RegisterWrap>
   );
