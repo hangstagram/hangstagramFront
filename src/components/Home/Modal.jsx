@@ -23,7 +23,7 @@ const Modal = ({ isOpen, setIsopen, selectedPost, dataList }) => {
       try {
         await api.delete(`/post/${id}`,{
           headers: {
-            authorization: `${localStorage.getItem("isLogin")}`,
+            authorization: `${localStorage.getItem("authorization")}`,
           },withCredentials:true
         });
       } catch (error) {

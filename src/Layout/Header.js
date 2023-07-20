@@ -1,46 +1,62 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShip } from "@fortawesome/free-solid-svg-icons";
-import React from 'react'
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 function Header({ icon }) {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handelLogout = () => {
-    localStorage.removeItem("isLogin")
-    navigate("/login")
-  }
+    localStorage.removeItem("isLogin");
+    localStorage.removeItem("authorization")
+    navigate("/login");
+  };
+
+  const isLoggedIn = localStorage.getItem("isLogin") ==="true";
 
   return (
     <HeaderStyle>
       <div style={{ display: "flex" }}>
-      
         <FontAwesomeIcon
           icon={faShip}
           onClick={() => navigate("/")}
           style={ShipStyle}
         />
-        <h2 onClick={() => navigate("/")}
-        style={{
-             marginLeft: "30px",
-             cursor:'pointer'
-     }}
-     >hangStargram99</h2>
+        <h2
+          onClick={() => navigate("/")}
+          style={{
+            marginLeft: "30px",
+            cursor: "pointer",
+          }}
+        >
+          hangStargram99
+        </h2>
       </div>
-      <div style={{display: "flex", gap: "20px"}}>
-      <FontAwesomeIcon
-        icon={icon}
-        onClick={() => navigate("/upload")}
-        style={PenStyle}
-      />
-      <h3 style={{cursor: "pointer"}} onClick={handelLogout}>로그아웃</h3>
+      <div style={{ display: "flex", gap: "20px" }}>
+        <FontAwesomeIcon
+          icon={icon}
+          onClick={() => navigate("/upload")}
+          style={PenStyle}
+        />
+        {isLoggedIn ? (
+          <h3 style={{ cursor: "pointer" }} onClick={handelLogout}>
+            로그아웃
+          </h3>
+        ) : (
+          <h3
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/login")}
+          >
+            로그인
+          </h3>
+        )}
       </div>
     </HeaderStyle>
-  )
+  );
 }
 
-export default Header
+export default Header;
 
 const ShipStyle = {
   zIndex: "1",
