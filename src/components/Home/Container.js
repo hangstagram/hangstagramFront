@@ -13,6 +13,7 @@ const TextContainer = styled.div`
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+  text-align: center;
   text-overflow: ellipsis;
   h1 {
     overflow: hidden;
