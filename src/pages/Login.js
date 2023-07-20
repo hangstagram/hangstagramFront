@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../Api/api"
 import { InputBox, Loginbutton, TextBox } from "../components/Register/Style";
 import { RegisterWrap } from "../components/Register/Container";
 
@@ -24,8 +24,8 @@ function Login() {
       window.alert("아이디와 비밀번호를 모두 입력하세요");
     } else {
       try {
-        const { headers } = await axios.post(
-          "/api/user/login",
+        const {data}= await api.post(
+          "/user/login",
           {
             username: input.user,
             password: input.pw,
@@ -33,9 +33,10 @@ function Login() {
           { withCredentials: true }
         );
 
-        localStorage.setItem("Authorization", ` ${headers.authorization}`);
+        localStorage.setItem("Authorization", ` ${data}`);
         localStorage.setItem("isLogin" , "true")
-        console.log(headers);
+
+        console.log(data);
         navigate("/");
       } catch (error) {
         console.log(`error, ${error}`);
