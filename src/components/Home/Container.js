@@ -83,8 +83,7 @@ const DateContiner = styled.div`
 `;
 
 const PostContainer = styled.div`
-  width: 300px;
-  height: 400px;
+  width: 400px;
   margin: 20px;
   padding: 20px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -100,7 +99,17 @@ const DataListContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+
 `;
+
+const Postuser = styled.div`
+display: flex;
+justify-content: space-between;
+  font-size: 16px;
+  padding: 10px;
+
+  
+`
 
 export {
   ImageContiainer,
@@ -113,4 +122,5 @@ export {
   DateContiner,
   PostContainer,
   DataListContainer,
+  Postuser
 };

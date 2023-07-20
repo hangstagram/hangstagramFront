@@ -22,4 +22,11 @@ const DeleteButton = styled.button`
   cursor: pointer;
 `;
 
-export { Penstyle, ModalClose, DeleteButton };
+const Userbutton = styled.button`
+    border: none;
+    background-color: #FFF;
+    height: 30px;
+    border-radius: 12px;
+`
+
+export { Penstyle, ModalClose, DeleteButton, Userbutton };

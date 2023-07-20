@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../Api/api"
+import api from "../Api/api";
 import { InputBox, Loginbutton, TextBox } from "../components/Register/Style";
 import { RegisterWrap } from "../components/Register/Container";
+import { useAuth } from "../Hooks/authContext";
 
 function Login() {
   const [input, setInput] = useState({
     user: "",
     pw: "",
   });
+
+ const {setUsername} = useAuth();
 
   const navigate = useNavigate();
 
@@ -24,7 +27,7 @@ function Login() {
       window.alert("아이디와 비밀번호를 모두 입력하세요");
     } else {
       try {
-        const {data}= await api.post(
+        const { data } = await api.post(
           "/user/login",
           {
             username: input.user,
@@ -33,10 +36,15 @@ function Login() {
           { withCredentials: true }
         );
 
-        localStorage.setItem("Authorization", ` ${data}`);
+        if (data.token) {
+          localStorage.setItem("Authorization", ` ${data.token}`);
+          navigate("/");
+          setUsername(data.username)
 
-        console.log(data);
-        navigate("/");
+        } else {
+          window.alert(`${data.msg}`);
+          console.log("msg", data.msg);
+        }
       } catch (error) {
         console.log(`error, ${error}`);
         setInput({ user: "", pw: "" });
