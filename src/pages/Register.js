@@ -131,7 +131,7 @@ function Register() {
       <div>
         <TextBox>비밀번호</TextBox>
         <InputBox
-          type="text"
+          type="password"
           placeholder=""
           value={input.pw}
           name="pw"

@@ -21,7 +21,7 @@ const UplaodButtonHandler = async (
       {
         headers: {
           "Content-Type": "multipart/form-data",
-          authorization: `${localStorage.getItem("isLogin")}`,
+          authorization: `${localStorage.getItem("authorization")}`,
         },withCredentials:true
       }
     );

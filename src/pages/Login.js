@@ -4,7 +4,6 @@ import axios from "axios";
 import { InputBox, Loginbutton, TextBox } from "../components/Register/Style";
 import { RegisterWrap } from "../components/Register/Container";
 
-
 function Login() {
   const [input, setInput] = useState({
     user: "",
@@ -20,59 +19,60 @@ function Login() {
     });
   };
 
-  const LoginButton = () => {
+  const handelLogin = async () => {
     if (input.user === "" || input.pw === "") {
       window.alert("아이디와 비밀번호를 모두 입력하세요");
     } else {
-      handelLogin();
-    }
-  };
+      try {
+        const { headers } = await axios.post(
+          "/api/user/login",
+          {
+            username: input.user,
+            password: input.pw,
+          },
+          { withCredentials: true }
+        );
 
-  const handelLogin = async () => {
-    try {
-      const {headers} = await axios.post(
-        "/api/user/login",
-        {
-          username: input.user,
-          password: input.pw,
-        },
-        { withCredentials: true }
-      );
-
-      localStorage.setItem("isLogin", ` ${headers.authorization}`);
-      console.log(headers);
-      navigate("/");
-    } catch (error) {
-      console.log(`error, ${error}`);
-      setInput({ user: "", pw: "" });
+        localStorage.setItem("authorization", ` ${headers.authorization}`);
+        localStorage.setItem("isLogin" , "true")
+        console.log(headers);
+        navigate("/");
+      } catch (error) {
+        console.log(`error, ${error}`);
+        setInput({ user: "", pw: "" });
+      }
     }
   };
 
   return (
-    <RegisterWrap>
-      <div>
-        <TextBox>아이디</TextBox>
-        <InputBox
-          type="text"
-          placeholder=""
-          value={input.user}
-          name="user"
-          onChange={handleInput}
-        />
-      </div>
-      <div>
-        <TextBox>비밀번호</TextBox>
-        <InputBox
-          type="text"
-          placeholder=""
-          value={input.pw}
-          name="pw"
-          onChange={handleInput}
-        />
-      </div>
-      <Loginbutton onClick={LoginButton}>로그인</Loginbutton>
-      <Loginbutton onClick={() => navigate("/register")}>회원가입</Loginbutton>
-    </RegisterWrap>
+    <div>
+      <RegisterWrap>
+        <div>
+          <TextBox>아이디</TextBox>
+          <InputBox
+            type="text"
+            placeholder=""
+            value={input.user}
+            name="user"
+            onChange={handleInput}
+          />
+        </div>
+        <div>
+          <TextBox>비밀번호</TextBox>
+          <InputBox
+            type="password"
+            placeholder=""
+            value={input.pw}
+            name="pw"
+            onChange={handleInput}
+          />
+        </div>
+        <Loginbutton onClick={handelLogin}>로그인</Loginbutton>
+        <Loginbutton onClick={() => navigate("/register")}>
+          회원가입
+        </Loginbutton>
+      </RegisterWrap>
+    </div>
   );
 }
 
