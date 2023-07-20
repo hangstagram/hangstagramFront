@@ -5,6 +5,7 @@ import Modal from './Modal';
 import { useDispatch } from 'react-redux';
 import { __fetchDataList } from '../../redux/modules/dataListSlice';
 
+
 function Mapdata() {
     const [isOpen, setIsopen] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
@@ -33,6 +34,7 @@ function Mapdata() {
           onClick={() => handlePostClick(item.id)}
         >
           <ImageContiainer>
+            <button style={{border: "none", backgroundColor: "#FFF", marginLeft: "auto"}}>{item.createdAt.slice(14,19)}</button>
             <img
               alt="img"
               key={item.id}
