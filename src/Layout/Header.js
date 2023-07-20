@@ -9,7 +9,7 @@ function Header({ icon }) {
 
   const handelLogout = () => {
     localStorage.removeItem("isLogin");
-    localStorage.removeItem("authorization")
+    localStorage.removeItem("Authorization")
     navigate("/login");
   };
 

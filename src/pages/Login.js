@@ -33,7 +33,7 @@ function Login() {
           { withCredentials: true }
         );
 
-        localStorage.setItem("authorization", ` ${headers.authorization}`);
+        localStorage.setItem("Authorization", ` ${headers.authorization}`);
         localStorage.setItem("isLogin" , "true")
         console.log(headers);
         navigate("/");
