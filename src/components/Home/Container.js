@@ -90,6 +90,7 @@ const PostContainer = styled.div`
   border-radius: 10px;
   flex-direction: column;
   cursor: pointer;
+  background-color: white;
 `;
 
 const DataListContainer = styled.div`
@@ -99,7 +100,6 @@ const DataListContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-
 `;
 
 const Postuser = styled.div`
