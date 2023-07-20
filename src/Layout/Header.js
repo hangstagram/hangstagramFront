@@ -8,12 +8,20 @@ function Header({ icon }) {
   const navigate = useNavigate();
 
   const handelLogout = () => {
-    localStorage.removeItem("isLogin");
     localStorage.removeItem("Authorization")
     navigate("/login");
   };
 
-  const isLoggedIn = localStorage.getItem("isLogin") ==="true";
+  const isLoggedIn = localStorage.getItem("Authorization") !== null;
+
+  const handleUploadClick = ()=>{
+    if (isLoggedIn){
+      navigate("/upload");
+    } else {
+      alert("로그인 하고 이용해주세요")
+      navigate("/login")
+    }
+  }
 
   return (
     <HeaderStyle>
@@ -36,7 +44,7 @@ function Header({ icon }) {
       <div style={{ display: "flex", gap: "20px" }}>
         <FontAwesomeIcon
           icon={icon}
-          onClick={() => navigate("/upload")}
+          onClick={handleUploadClick}
           style={PenStyle}
         />
         {isLoggedIn ? (
@@ -46,7 +54,7 @@ function Header({ icon }) {
         ) : (
           <h3
             style={{ cursor: "pointer" }}
-            onClick={() => navigate("/login")}
+            onClick={()=> navigate("/login")}
           >
             로그인
           </h3>

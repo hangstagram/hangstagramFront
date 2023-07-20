@@ -34,7 +34,6 @@ function Login() {
         );
 
         localStorage.setItem("Authorization", ` ${data}`);
-        localStorage.setItem("isLogin" , "true")
 
         console.log(data);
         navigate("/");
